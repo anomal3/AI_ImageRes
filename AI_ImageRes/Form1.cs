@@ -14,10 +14,11 @@ namespace AI_ImageRes
             if(Settings.Default.WelcomeStart == 0)
                 MessageBox.Show(Settings.Default.WelcomeMessage, "ќсторожно! умна€ падла", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            var context = new MLContext();
+            //¬ерси€ CPU
+            //var context = new MLContext();
 
-            engine = context.Model.CreatePredictionEngine<EnviromentModel.ModelInput, EnviromentModel.ModelOutput>(
-                context.Model.Load(Path.GetFullPath("EnviromentModel.zip"), out _));
+            //engine = context.Model.CreatePredictionEngine<EnviromentModel.ModelInput, EnviromentModel.ModelOutput>(
+            //    context.Model.Load(Path.GetFullPath("EnviromentModel.zip"), out _));
 
             Settings.Default.WelcomeStart++;
             Settings.Default.Save();
@@ -45,12 +46,24 @@ namespace AI_ImageRes
 
             var time = Stopwatch.StartNew();
             var imageBytes = File.ReadAllBytes(file);
-            var result = engine.Predict(new EnviromentModel.ModelInput
-            {
-                ImageSource = imageBytes
-            });
 
-            lblResult.Text = $@"Ёто {result.PredictedLabel}  - {result.Score.Max():p0}% затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
+            EnviromentModel.ModelInput result = new EnviromentModel.ModelInput()
+            {
+                ImageSource = imageBytes,
+            };
+
+            var sortedScoresWithLabel = EnviromentModel.PredictAllLabels(result);
+            var model = sortedScoresWithLabel.OrderByDescending(x => x.Value).First();
+
+            lblResult.Text = $@"Ёто {model.Key}  - {model.Value:p0} затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
+
+            //¬ерси€ CPU
+            //var result = engine.Predict(new EnviromentModel.ModelInput
+            //{
+            //    ImageSource = imageBytes
+            //});
+            //lblResult.Text = $@"Ёто {result.PredictedLabel}  - {result.Score.Max():p0}% затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
+
         }
     }
 }
