@@ -1,0 +1,20 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AI_ImageRes.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WelcomeStart" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="WelcomeMessage" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Привет! Это чёртов ИИ, AI называй как хочешь. Он обучен на моделях Машины, Человка, Собаки и Кошки. 
+Распознаёт падла и даёт вердикт кто на картинке. 
+Был обучен при помощи 40 картинок каждого типа. 
+Это первая итерация программы и ИИ. Данное сообщение вылазить больше не будет.
+
+Вот тебе и терминатор будующий!
+
+
+2023©РоманКощеев</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
