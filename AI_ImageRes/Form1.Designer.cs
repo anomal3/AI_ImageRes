@@ -46,6 +46,9 @@
             this.pic.Size = new System.Drawing.Size(803, 515);
             this.pic.TabIndex = 0;
             this.pic.TabStop = false;
+            this.pic.DragDrop += new System.Windows.Forms.DragEventHandler(this.pic_DragDrop);
+            this.pic.DragEnter += new System.Windows.Forms.DragEventHandler(this.pic_DragEnter);
+            this.pic.DragLeave += new System.EventHandler(this.pic_DragLeave);
             // 
             // bOpen
             // 
