@@ -8,7 +8,8 @@ namespace AI_ImageRes
 {
     public partial class Form1 : Form
     {
-        private readonly PredictionEngine<EnviromentModel.ModelInput, EnviromentModel.ModelOutput> engine;
+        #region .ctor
+
         public Form1()
         {
             InitializeComponent();
@@ -30,38 +31,17 @@ namespace AI_ImageRes
             pic.BackColor = Color.White;
         }
 
+        #endregion
+
         #region Variables
 
+        private readonly PredictionEngine<EnviromentModel.ModelInput, EnviromentModel.ModelOutput> engine;
         delegate void FileLoaded(string _filePath);
         event FileLoaded loaded_event;
 
         #endregion
 
-        private async void bOpen_Click(object sender, EventArgs e)
-        {
-            var dialog = new OpenFileDialog
-            {
-                Title = "Выьерите картинку",
-                Filter = "Картинки (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp",
-                CheckFileExists = true
-            };
-
-            if(dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            lblResult.Text = "Ожидайте...";
-            await Task.Delay(1);
-
-            var file = dialog.FileName;
-            
-            loaded_event.Invoke(file);
-            //Версия CPU
-            //var result = engine.Predict(new EnviromentModel.ModelInput
-            //{
-            //    ImageSource = imageBytes
-            //});
-            //lblResult.Text = $@"Это {result.PredictedLabel}  - {result.Score.Max():p0}% затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
-
-        }
+        #region Drag'n'Drop
 
         private void pic_DragEnter(object sender, DragEventArgs e)
         {
@@ -86,6 +66,37 @@ namespace AI_ImageRes
         }
 
 
+        #endregion
+
+        #region Event
+
+
+        private async void bOpen_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Выьерите картинку",
+                Filter = "Картинки (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp",
+                CheckFileExists = true
+            };
+
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            lblResult.Text = "Ожидайте...";
+            await Task.Delay(1);
+
+            var file = dialog.FileName;
+
+            loaded_event.Invoke(file);
+            //Версия CPU
+            //var result = engine.Predict(new EnviromentModel.ModelInput
+            //{
+            //    ImageSource = imageBytes
+            //});
+            //lblResult.Text = $@"Это {result.PredictedLabel}  - {result.Score.Max():p0}% затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
+
+        }
+
         private void FileLoadedEvent(string _filePath)
         {
             if (string.IsNullOrWhiteSpace(_filePath)) return;
@@ -107,5 +118,6 @@ namespace AI_ImageRes
             lblResult.Text = $@"Это {model.Key}  - {model.Value:p0} затрачено на распознование ~{Math.Round(time.Elapsed.TotalSeconds, 2)} сек";
         }
 
+        #endregion
     }
 }
