@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebML", "WebML\WebML.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI_ImageTraining", "AI_ImageTraining\AI_ImageTraining.csproj", "{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Release|x64.ActiveCfg = Release|Any CPU
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Release|x64.Build.0 = Release|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Debug|x64.Build.0 = Debug|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Release|x64.ActiveCfg = Release|Any CPU
+		{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
