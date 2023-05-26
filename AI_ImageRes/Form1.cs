@@ -13,7 +13,7 @@ namespace AI_ImageRes
         public Form1()
         {
             InitializeComponent();
-            if(Settings.Default.WelcomeStart == 0)
+            if (Settings.Default.WelcomeStart == 0)
                 MessageBox.Show(Settings.Default.WelcomeMessage, "Осторожно! умная падла", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             loaded_event += FileLoadedEvent;
@@ -22,13 +22,17 @@ namespace AI_ImageRes
             //var context = new MLContext();
 
             //engine = context.Model.CreatePredictionEngine<EnviromentModel.ModelInput, EnviromentModel.ModelOutput>(
-            //    context.Model.Load(Path.GetFullPath("EnviromentModel.zip"), out _));
+            //    context.Model.Load("D:\\MLTU\\testModel.mlnet", out _));
 
             Settings.Default.WelcomeStart++;
             Settings.Default.Save();
 
             pic.AllowDrop = true;
             pic.BackColor = Color.White;
+
+            txtPathModel.Text = string.IsNullOrWhiteSpace(Settings.Default.ModelPath) ? "Кликните дважы и укажите путь до папки с моделью" : Settings.Default.ModelPath;
+
+            if (!string.IsNullOrWhiteSpace(Settings.Default.ModelPath)) EnviromentModel.MLNetModelPath = Settings.Default.ModelPath;
         }
 
         #endregion
@@ -119,5 +123,24 @@ namespace AI_ImageRes
         }
 
         #endregion
+
+        private void txtPathModel_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "ML.NET модель|*.mlnet",
+                Title = "Выбрать модель"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                var modelFilePath = dialog.FileName;
+                txtPathModel.Text = modelFilePath;
+                Settings.Default.ModelPath = modelFilePath;
+                Settings.Default.Save();
+            }
+
+            EnviromentModel.MLNetModelPath = Settings.Default.ModelPath;
+        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using AI_ImageTraining.Classes;
 using Microsoft.ML;
-using Microsoft.ML.OnnxRuntime;
-using AI_ImageTraining.Classes;
-using Microsoft.ML.Data;
-using Microsoft.ML.Vision;
+using AI_ImageRes;
 using System.Windows.Forms;
-using Tensorflow.Keras.Engine;
+using System.Threading;
 
 namespace AI_ImageTraining.Forms
 {
@@ -23,14 +20,18 @@ namespace AI_ImageTraining.Forms
         private int currentImageIndex;
 
         #endregion
+
         public frmTrain()
         {
             InitializeComponent();
             mlContext = new MLContext();
+            Update.Start();
         }
 
         private void btnSelectRootFolder_Click(object sender, EventArgs e)
         {
+            txtProgress.Text = string.Empty;
+
             var dialog = new FolderBrowserDialog
             {
                 Description = "Выберите корневую папку с обучающими изображениями"
@@ -60,6 +61,10 @@ namespace AI_ImageTraining.Forms
 
         private async void btnFineTune_ClickAsync(object sender, EventArgs e)
         {
+            btnFineTune.Enabled = false;
+            btnSelectRootFolder.Enabled = false;
+            predictButton.Enabled = false;
+
             // Загрузка данных из папки
             var folderPath = rootFolderPath;
 
@@ -67,21 +72,57 @@ namespace AI_ImageTraining.Forms
 
             progressBar.Minimum = 0;
             progressBar.Maximum = imageFilePaths.Count + 1;
-            MessageBox.Show($"Итого {imageFilePaths.Count}");
+
+            var trainingData = await MLT.LoadImageFromFolder(mlContext, folderPath, progressBar, txtProgress);
             await Task.Delay(1000);
+            progressBar.Style = ProgressBarStyle.Marquee;
+            UpdateLogTextBox("Ждите... Идёт обучение модели");
             progressBar.Value = 0;
 
-            var trainingData = MLT.LoadImageFromFolder(mlContext, folderPath, progressBar, txtProgress);
 
-            progressBar.Value = 0;
-            // Создание модели
-            trainedModel = await Task.Run(async () => MLT.RetrainModel(mlContext, trainingData, progressBar, txtProgress, rootFolderPath));
+            var dialog = new SaveFileDialog()
+            {
+                Filter = "ML.NET модель|*.mlnet",
+                Title = "Выбрать место для сохранения модели"
+            };
 
-            MessageBox.Show("Обучение завершено.");
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                var modelFilePath = dialog.FileName;
 
+                Thread thread = new Thread((async () =>
+                {
+                    #region Имитация...
+                    //TODO : Отловить прогресс
+                    foreach (string imageFilePath in imageFilePaths)
+                    {
+                        await Task.Delay(40);
+                        picImage.Image = Image.FromFile(imageFilePath);
+                        await Task.Delay(40);
+                        Bitmap originalImage = new Bitmap(imageFilePath);
+                        Bitmap processedImage = new Bitmap(originalImage.Width, originalImage.Height);
+                        AdjustBrightnessContrast(originalImage, processedImage, 11f, 2.5f);
+                        picImage.Image = processedImage;
+                    }
+
+                    #endregion
+                }));
+                thread.Start();
+                
+                // Создание модели
+                trainedModel = await Task.Run(async () =>
+                    MLT.RetrainModel(mlContext, trainingData, progressBar, txtProgress, modelFilePath));
+            }
+
+            UpdateLogTextBox("\"Обучение завершено.\"");
+
+            btnFineTune.Enabled = true;
+            btnSelectRootFolder.Enabled = true;
+            predictButton.Enabled = true;
+
+            progressBar.Style = ProgressBarStyle.Blocks;
             // Очистка PictureBox и лога
             picImage.Image = null;
-            txtProgress.Text = string.Empty;
             progressBar.Value = 0;
         }
 
@@ -127,12 +168,12 @@ namespace AI_ImageTraining.Forms
             {
                 logTextBox.Invoke(new Action(() =>
                 {
-                    logTextBox.AppendText(message + "\n");
+                    logTextBox.AppendText(message + "\r\n");
                 }));
             }
             else
             {
-                logTextBox.AppendText(message + "\n");
+                logTextBox.AppendText(message + "\r\n");
             }
         }
 
@@ -237,6 +278,48 @@ namespace AI_ImageTraining.Forms
             }
 
             return filePaths;
+        }
+
+        private void Update_Tick(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(DataStatic.logUpdate))
+                txtProgress.AppendText(DataStatic.logUpdate + "\r\n");
+        }
+
+        private void AdjustBrightnessContrast(Bitmap sourceImage, Bitmap destinationImage, float brightness, float contrast)
+        {
+            // Получение ширины и высоты изображения
+            int width = sourceImage.Width;
+            int height = sourceImage.Height;
+
+            // Итерация по пикселям изображения
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Получение цвета пикселя
+                    Color originalColor = sourceImage.GetPixel(x, y);
+
+                    // Изменение яркости и контрастности пикселя
+                    int newRed = (int)(originalColor.R * 0.299 + originalColor.G * 0.587 + originalColor.B * 0.114 * contrast + brightness);
+                    int newGreen = (int)(originalColor.R * 0.299 + originalColor.G * 0.587 + originalColor.B * 0.114 * contrast + brightness);
+                    int newBlue = (int)(originalColor.R * 0.299 + originalColor.G * 0.587 + originalColor.B * 0.114 * contrast + brightness);
+
+                    // Ограничение значений цветов в пределах 0-255
+                    newRed = Math.Max(0, Math.Min(255, newRed));
+                    newGreen = Math.Max(0, Math.Min(255, newGreen));
+                    newBlue = Math.Max(0, Math.Min(255, newBlue));
+
+                    // Создание нового цвета с измененными значениями
+                    Color newColor = Color.FromArgb(newRed, newGreen, newBlue);
+
+                    // Установка нового цвета пикселя в обработанном изображении
+                    destinationImage.SetPixel(x, y, newColor);
+
+                    // Установка нового цвета пикселя в обработанном изображении
+                    destinationImage.SetPixel(x, y, newColor);
+                }
+            }
         }
     }
 }

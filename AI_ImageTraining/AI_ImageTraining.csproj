@@ -5,16 +5,25 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageIcon>123.png</PackageIcon>
+    <ApplicationIcon>123.ico</ApplicationIcon>
+    <BaseOutputPath></BaseOutputPath>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="3.0.0-preview.23266.6" />
+    <Content Include="123.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.ML.ImageAnalytics" Version="3.0.0-preview.23266.6" />
-    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="3.0.0-preview.23266.6" />
+    <PackageReference Include="Microsoft.ML.TensorFlow" Version="3.0.0-preview.23266.6" />
     <PackageReference Include="Microsoft.ML.Vision" Version="3.0.0-preview.23266.6" />
     <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.3.1" />
-    <PackageReference Include="TorchSharp" Version="0.100.0" />
   </ItemGroup>
   <ItemGroup Label="MLT">
+    <None Include="C:\Users\admin\Downloads\123.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="MLT.mlnet">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

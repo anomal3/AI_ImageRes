@@ -29,62 +29,78 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.pic = new System.Windows.Forms.PictureBox();
-            this.bOpen = new System.Windows.Forms.Button();
-            this.lblResult = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
-            this.SuspendLayout();
+            pic = new PictureBox();
+            bOpen = new Button();
+            lblResult = new Label();
+            txtPathModel = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)pic).BeginInit();
+            SuspendLayout();
             // 
             // pic
             // 
-            this.pic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pic.Location = new System.Drawing.Point(12, 12);
-            this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(803, 515);
-            this.pic.TabIndex = 0;
-            this.pic.TabStop = false;
-            this.pic.DragDrop += new System.Windows.Forms.DragEventHandler(this.pic_DragDrop);
-            this.pic.DragEnter += new System.Windows.Forms.DragEventHandler(this.pic_DragEnter);
-            this.pic.DragLeave += new System.EventHandler(this.pic_DragLeave);
+            pic.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pic.BorderStyle = BorderStyle.FixedSingle;
+            pic.Location = new Point(14, 14);
+            pic.Margin = new Padding(4, 3, 4, 3);
+            pic.Name = "pic";
+            pic.Size = new Size(936, 594);
+            pic.TabIndex = 0;
+            pic.TabStop = false;
+            pic.DragDrop += pic_DragDrop;
+            pic.DragEnter += pic_DragEnter;
+            pic.DragLeave += pic_DragLeave;
             // 
             // bOpen
             // 
-            this.bOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bOpen.Location = new System.Drawing.Point(12, 542);
-            this.bOpen.Name = "bOpen";
-            this.bOpen.Size = new System.Drawing.Size(250, 53);
-            this.bOpen.TabIndex = 1;
-            this.bOpen.Text = "Открыть и распознать";
-            this.bOpen.UseVisualStyleBackColor = true;
-            this.bOpen.Click += new System.EventHandler(this.bOpen_Click);
+            bOpen.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            bOpen.Location = new Point(14, 625);
+            bOpen.Margin = new Padding(4, 3, 4, 3);
+            bOpen.Name = "bOpen";
+            bOpen.Size = new Size(292, 61);
+            bOpen.TabIndex = 1;
+            bOpen.Text = "Открыть и распознать";
+            bOpen.UseVisualStyleBackColor = true;
+            bOpen.Click += bOpen_Click;
             // 
             // lblResult
             // 
-            this.lblResult.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblResult.Location = new System.Drawing.Point(358, 542);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(457, 53);
-            this.lblResult.TabIndex = 2;
-            this.lblResult.Text = "Это {0} - {1}% затрачено  на распознование {2} сек";
-            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblResult.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            lblResult.BorderStyle = BorderStyle.FixedSingle;
+            lblResult.FlatStyle = FlatStyle.System;
+            lblResult.Location = new Point(314, 664);
+            lblResult.Margin = new Padding(4, 0, 4, 0);
+            lblResult.Name = "lblResult";
+            lblResult.Size = new Size(533, 22);
+            lblResult.TabIndex = 2;
+            lblResult.Text = "Это {0} - {1}% затрачено  на распознование {2} сек";
+            lblResult.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // txtPathModel
+            // 
+            txtPathModel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            txtPathModel.Location = new Point(314, 625);
+            txtPathModel.Name = "txtPathModel";
+            txtPathModel.Size = new Size(533, 23);
+            txtPathModel.TabIndex = 3;
+            txtPathModel.Text = "Кликните дважды чтобы указать путь до модели";
+            txtPathModel.MouseDoubleClick += txtPathModel_MouseDoubleClick;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 607);
-            this.Controls.Add(this.lblResult);
-            this.Controls.Add(this.bOpen);
-            this.Controls.Add(this.pic);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
-            this.Text = "Ёбанный ИИ который может распознать Машину, Кота, Собаку и Человека";
-            ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(965, 700);
+            Controls.Add(txtPathModel);
+            Controls.Add(lblResult);
+            Controls.Add(bOpen);
+            Controls.Add(pic);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "Form1";
+            Text = "ИИ который может...";
+            ((System.ComponentModel.ISupportInitialize)pic).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -92,5 +108,6 @@
         private PictureBox pic;
         private Button bOpen;
         private Label lblResult;
+        private TextBox txtPathModel;
     }
 }

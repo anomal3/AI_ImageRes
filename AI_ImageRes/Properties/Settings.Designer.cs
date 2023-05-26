@@ -12,7 +12,7 @@ namespace AI_ImageRes.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,10 +37,10 @@ namespace AI_ImageRes.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"Привет! Это чёртов ИИ, AI называй как хочешь. Он обучен на моделях Машины, Человка, Собаки и Кошки. 
+        [global::System.Configuration.DefaultSettingValueAttribute(@"Привет! Это чёртов ИИ, AI называй как хочешь. Он может обучаться и обучаться. 
 Распознаёт падла и даёт вердикт кто на картинке. 
-Был обучен при помощи 40 картинок каждого типа. 
-Это первая итерация программы и ИИ. Данное сообщение вылазить больше не будет.
+1 итерация программы была обучена при помощи 40 картинок каждого типа разрешением не более 150х150. 
+Данное сообщение вступительное и вылазить больше не будет.
 
 Вот тебе и терминатор будующий!
 
@@ -49,6 +49,18 @@ namespace AI_ImageRes.Properties {
         public string WelcomeMessage {
             get {
                 return ((string)(this["WelcomeMessage"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ModelPath {
+            get {
+                return ((string)(this["ModelPath"]));
+            }
+            set {
+                this["ModelPath"] = value;
             }
         }
     }

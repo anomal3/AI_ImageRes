@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AI_ImageRes", "AI_ImageRes\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetImageParser", "InternetImageParser\InternetImageParser.csproj", "{5D37C500-0641-433A-BBFF-335F2B2F5042}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebML", "WebML\WebML.csproj", "{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI_ImageTraining", "AI_ImageTraining\AI_ImageTraining.csproj", "{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AI_ImageTraining", "AI_ImageTraining\AI_ImageTraining.csproj", "{CFF2ECE4-7C34-4C8A-AADA-2327A65DB3A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +35,6 @@ Global
 		{5D37C500-0641-433A-BBFF-335F2B2F5042}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D37C500-0641-433A-BBFF-335F2B2F5042}.Release|x64.ActiveCfg = Release|Any CPU
 		{5D37C500-0641-433A-BBFF-335F2B2F5042}.Release|x64.Build.0 = Release|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Debug|x64.Build.0 = Debug|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Release|x64.ActiveCfg = Release|Any CPU
-		{2D4A11F0-56CC-44CD-808E-A1E2C89B85F8}.Release|x64.Build.0 = Release|Any CPU
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73D4DF6F-3374-469B-A3EE-69FE39BDB1B1}.Debug|x64.ActiveCfg = Debug|Any CPU

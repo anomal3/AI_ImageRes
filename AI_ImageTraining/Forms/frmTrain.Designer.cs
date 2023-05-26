@@ -28,123 +28,149 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnSelectRootFolder = new System.Windows.Forms.Button();
-            this.btnSelectModel = new System.Windows.Forms.Button();
-            this.btnFineTune = new System.Windows.Forms.Button();
-            this.picImage = new System.Windows.Forms.PictureBox();
-            this.txtRootFolder = new System.Windows.Forms.TextBox();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.txtModelPath = new System.Windows.Forms.TextBox();
-            this.txtProgress = new System.Windows.Forms.TextBox();
-            this.predictButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTrain));
+            btnSelectRootFolder = new Button();
+            btnSelectModel = new Button();
+            btnFineTune = new Button();
+            picImage = new PictureBox();
+            txtRootFolder = new TextBox();
+            progressBar = new ProgressBar();
+            txtModelPath = new TextBox();
+            txtProgress = new TextBox();
+            predictButton = new Button();
+            Update = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)picImage).BeginInit();
+            SuspendLayout();
             // 
             // btnSelectRootFolder
             // 
-            this.btnSelectRootFolder.Location = new System.Drawing.Point(12, 411);
-            this.btnSelectRootFolder.Name = "btnSelectRootFolder";
-            this.btnSelectRootFolder.Size = new System.Drawing.Size(140, 23);
-            this.btnSelectRootFolder.TabIndex = 0;
-            this.btnSelectRootFolder.Text = "Папка для обучения";
-            this.btnSelectRootFolder.UseVisualStyleBackColor = true;
-            this.btnSelectRootFolder.Click += new System.EventHandler(this.btnSelectRootFolder_Click);
+            btnSelectRootFolder.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSelectRootFolder.Location = new Point(14, 299);
+            btnSelectRootFolder.Margin = new Padding(4, 3, 4, 3);
+            btnSelectRootFolder.Name = "btnSelectRootFolder";
+            btnSelectRootFolder.Size = new Size(163, 27);
+            btnSelectRootFolder.TabIndex = 0;
+            btnSelectRootFolder.Text = "Папка для обучения";
+            btnSelectRootFolder.UseVisualStyleBackColor = true;
+            btnSelectRootFolder.Click += btnSelectRootFolder_Click;
             // 
             // btnSelectModel
             // 
-            this.btnSelectModel.Location = new System.Drawing.Point(158, 411);
-            this.btnSelectModel.Name = "btnSelectModel";
-            this.btnSelectModel.Size = new System.Drawing.Size(140, 23);
-            this.btnSelectModel.TabIndex = 0;
-            this.btnSelectModel.Text = "Выбрать модель";
-            this.btnSelectModel.UseVisualStyleBackColor = true;
-            this.btnSelectModel.Click += new System.EventHandler(this.btnSelectModel_Click);
+            btnSelectModel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnSelectModel.Enabled = false;
+            btnSelectModel.Location = new Point(210, 299);
+            btnSelectModel.Margin = new Padding(4, 3, 4, 3);
+            btnSelectModel.Name = "btnSelectModel";
+            btnSelectModel.Size = new Size(163, 27);
+            btnSelectModel.TabIndex = 0;
+            btnSelectModel.Text = "Выбрать модель";
+            btnSelectModel.UseVisualStyleBackColor = true;
+            btnSelectModel.Click += btnSelectModel_Click;
             // 
             // btnFineTune
             // 
-            this.btnFineTune.Location = new System.Drawing.Point(304, 411);
-            this.btnFineTune.Name = "btnFineTune";
-            this.btnFineTune.Size = new System.Drawing.Size(140, 23);
-            this.btnFineTune.TabIndex = 0;
-            this.btnFineTune.Text = "Начать дообучение";
-            this.btnFineTune.UseVisualStyleBackColor = true;
-            this.btnFineTune.Click += new System.EventHandler(this.btnFineTune_ClickAsync);
+            btnFineTune.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnFineTune.Location = new Point(416, 299);
+            btnFineTune.Margin = new Padding(4, 3, 4, 3);
+            btnFineTune.Name = "btnFineTune";
+            btnFineTune.Size = new Size(163, 27);
+            btnFineTune.TabIndex = 0;
+            btnFineTune.Text = "Начать обучение";
+            btnFineTune.UseVisualStyleBackColor = true;
+            btnFineTune.Click += btnFineTune_ClickAsync;
             // 
             // picImage
             // 
-            this.picImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picImage.Location = new System.Drawing.Point(12, 12);
-            this.picImage.Name = "picImage";
-            this.picImage.Size = new System.Drawing.Size(432, 393);
-            this.picImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picImage.TabIndex = 1;
-            this.picImage.TabStop = false;
+            picImage.BorderStyle = BorderStyle.FixedSingle;
+            picImage.Location = new Point(14, 14);
+            picImage.Margin = new Padding(4, 3, 4, 3);
+            picImage.Name = "picImage";
+            picImage.Size = new Size(359, 203);
+            picImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picImage.TabIndex = 1;
+            picImage.TabStop = false;
             // 
             // txtRootFolder
             // 
-            this.txtRootFolder.Location = new System.Drawing.Point(450, 12);
-            this.txtRootFolder.Name = "txtRootFolder";
-            this.txtRootFolder.ReadOnly = true;
-            this.txtRootFolder.Size = new System.Drawing.Size(338, 22);
-            this.txtRootFolder.TabIndex = 2;
-            this.txtRootFolder.Text = "Путь до папки";
+            txtRootFolder.Location = new Point(14, 223);
+            txtRootFolder.Margin = new Padding(4, 3, 4, 3);
+            txtRootFolder.Name = "txtRootFolder";
+            txtRootFolder.ReadOnly = true;
+            txtRootFolder.Size = new Size(359, 23);
+            txtRootFolder.TabIndex = 2;
+            txtRootFolder.Text = "Путь до папки";
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(12, 440);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(776, 23);
-            this.progressBar.TabIndex = 3;
+            progressBar.Dock = DockStyle.Bottom;
+            progressBar.Location = new Point(0, 335);
+            progressBar.Margin = new Padding(4, 3, 4, 3);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(784, 16);
+            progressBar.TabIndex = 3;
             // 
             // txtModelPath
             // 
-            this.txtModelPath.Location = new System.Drawing.Point(450, 40);
-            this.txtModelPath.Name = "txtModelPath";
-            this.txtModelPath.ReadOnly = true;
-            this.txtModelPath.Size = new System.Drawing.Size(338, 22);
-            this.txtModelPath.TabIndex = 4;
-            this.txtModelPath.Text = "Путь до модели";
+            txtModelPath.Location = new Point(14, 252);
+            txtModelPath.Margin = new Padding(4, 3, 4, 3);
+            txtModelPath.Name = "txtModelPath";
+            txtModelPath.ReadOnly = true;
+            txtModelPath.Size = new Size(359, 23);
+            txtModelPath.TabIndex = 4;
+            txtModelPath.Text = "Путь до модели";
             // 
             // txtProgress
             // 
-            this.txtProgress.Location = new System.Drawing.Point(450, 68);
-            this.txtProgress.Multiline = true;
-            this.txtProgress.Name = "txtProgress";
-            this.txtProgress.ReadOnly = true;
-            this.txtProgress.Size = new System.Drawing.Size(338, 337);
-            this.txtProgress.TabIndex = 5;
-            this.txtProgress.Text = "Лог...";
+            txtProgress.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtProgress.Location = new Point(381, 14);
+            txtProgress.Margin = new Padding(4, 3, 4, 3);
+            txtProgress.Multiline = true;
+            txtProgress.Name = "txtProgress";
+            txtProgress.ReadOnly = true;
+            txtProgress.ScrollBars = ScrollBars.Both;
+            txtProgress.Size = new Size(392, 262);
+            txtProgress.TabIndex = 5;
+            txtProgress.Text = "Лог...";
             // 
             // predictButton
             // 
-            this.predictButton.Location = new System.Drawing.Point(450, 411);
-            this.predictButton.Name = "predictButton";
-            this.predictButton.Size = new System.Drawing.Size(137, 23);
-            this.predictButton.TabIndex = 6;
-            this.predictButton.Text = "predictButton";
-            this.predictButton.UseVisualStyleBackColor = true;
-            this.predictButton.Click += new System.EventHandler(this.predictButton_Click);
+            predictButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            predictButton.Location = new Point(611, 299);
+            predictButton.Margin = new Padding(4, 3, 4, 3);
+            predictButton.Name = "predictButton";
+            predictButton.Size = new Size(160, 27);
+            predictButton.TabIndex = 6;
+            predictButton.Text = "Протестировать обучение";
+            predictButton.UseVisualStyleBackColor = true;
+            predictButton.Click += predictButton_Click;
+            // 
+            // Update
+            // 
+            Update.Tick += Update_Tick;
             // 
             // frmTrain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 472);
-            this.Controls.Add(this.predictButton);
-            this.Controls.Add(this.txtProgress);
-            this.Controls.Add(this.txtModelPath);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.txtRootFolder);
-            this.Controls.Add(this.picImage);
-            this.Controls.Add(this.btnFineTune);
-            this.Controls.Add(this.btnSelectModel);
-            this.Controls.Add(this.btnSelectRootFolder);
-            this.Name = "frmTrain";
-            this.Text = "frmTrain";
-            ((System.ComponentModel.ISupportInitialize)(this.picImage)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(784, 351);
+            Controls.Add(predictButton);
+            Controls.Add(txtProgress);
+            Controls.Add(txtModelPath);
+            Controls.Add(progressBar);
+            Controls.Add(txtRootFolder);
+            Controls.Add(picImage);
+            Controls.Add(btnFineTune);
+            Controls.Add(btnSelectModel);
+            Controls.Add(btnSelectRootFolder);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 3, 4, 3);
+            MinimumSize = new Size(800, 390);
+            Name = "frmTrain";
+            Text = "Тренер личностного роста для ИИ";
+            ((System.ComponentModel.ISupportInitialize)picImage).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -158,5 +184,6 @@
         private TextBox txtModelPath;
         private TextBox txtProgress;
         private Button predictButton;
+        private System.Windows.Forms.Timer Update;
     }
 }

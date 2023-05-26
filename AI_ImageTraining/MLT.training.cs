@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AI_ImageTraining.Forms;
+using AI_ImageTraining.Classes;
 using Microsoft.ML.Data;
 using Microsoft.ML.Vision;
 using Microsoft.ML;
+using AI_ImageTraining.Forms;
 
-namespace AI_ImageTraining
+namespace AI_ImageRes
 {
     public partial class MLT
     {
@@ -21,7 +22,7 @@ namespace AI_ImageTraining
         /// </summary>
         /// <param name="mlContext">The common context for all ML.NET operations.</param>
         /// <param name="folder"> Folder to the image data for training.</param>
-        public static IDataView LoadImageFromFolder(MLContext mlContext, string folder, ProgressBar progressBar, TextBox logTextBox)
+        public static async Task<IDataView> LoadImageFromFolder(MLContext mlContext, string folder, ProgressBar progressBar, TextBox logTextBox)
         {
             var res = new List<ModelInput>();
             var allowedImageExtensions = new[] { ".png", ".jpg", ".jpeg", ".gif" };
@@ -52,8 +53,9 @@ namespace AI_ImageTraining
                         res.Add(modelInput);
 
                         processedImageCount++;
+                        await Task.Delay(2);
                         frmTrain.UpdateProgressBar(new frmTrain(), progressBar, processedImageCount, totalImageCount);
-                        frmTrain.UpdateLogTextBox(new frmTrain(), logTextBox, $"Загрузка изображений: {processedImageCount}/{totalImageCount}");
+                        frmTrain.UpdateLogTextBox(new frmTrain(), logTextBox, $"Загрузка изображения: {processedImageCount}/{totalImageCount}");
                     }
                 }
             }
@@ -61,25 +63,32 @@ namespace AI_ImageTraining
             return mlContext.Data.LoadFromEnumerable(res);
         }
 
-
         /// <summary>
         /// Retrain model using the pipeline generated as part of the training process.
         /// </summary>
         /// <param name="mlContext"></param>
         /// <param name="trainData"></param>
         /// <returns></returns>
-        public static ITransformer RetrainModel(MLContext mlContext, IDataView trainData, ProgressBar progressBar, TextBox logTextBox, string currentImagePath)
+        public static ITransformer RetrainModel(MLContext mlContext, IDataView trainData, ProgressBar progressBar, TextBox logTextBox, string modelFilePath)
         {
             var pipeline = BuildPipeline(mlContext);
             var model = pipeline.Fit(trainData);
 
             // Обновление прогрессбара и лога
-         
-            frmTrain.UpdateProgressBar(new frmTrain(), progressBar, progressBar.Value++, 100);
-            frmTrain.UpdateLogTextBox(new frmTrain(), logTextBox, $"Обучение на изображении: {currentImagePath}\n");
+
+            DataStatic.ProgressBarValue++;
+            DataStatic.ProgressBarValueMax = 100;
+            // DataStatic.logUpdate = $"Обучение на изображении: {currentImagePath}\n";
+            //frmTrain.UpdateProgressBar(new frmTrain(), progressBar, progressBar.Value++, 100);
+            //frmTrain.UpdateLogTextBox(new frmTrain(), logTextBox, $"Обучение на изображении: {currentImagePath}\n");
+
+
+            mlContext.Model.Save(model, null, modelFilePath);
+
 
             return model;
         }
+
 
         /// <summary>
         /// build the pipeline that is used from model builder. Use this function to retrain model.
@@ -89,11 +98,13 @@ namespace AI_ImageTraining
         public static IEstimator<ITransformer> BuildPipeline(MLContext mlContext)
         {
             // Data process configuration with pipeline data transformations
-            var pipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"Label",inputColumnName:@"Label",addKeyValueAnnotationsAsText:false)      
-                                    .Append(mlContext.MulticlassClassification.Trainers.ImageClassification(labelColumnName:@"Label",scoreColumnName:@"Score",featureColumnName:@"ImageSource"))      
-                                    .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"PredictedLabel",inputColumnName:@"PredictedLabel"));
+            var pipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName: @"Label", inputColumnName: @"Label", addKeyValueAnnotationsAsText: false)
+                                    .Append(mlContext.MulticlassClassification.Trainers.ImageClassification(labelColumnName: @"Label", scoreColumnName: @"Score", featureColumnName: @"ImageSource"))
+                                    .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName: @"PredictedLabel", inputColumnName: @"PredictedLabel"));
 
             return pipeline;
         }
+
+      
     }
- }
+}

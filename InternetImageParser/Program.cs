@@ -8,46 +8,70 @@ namespace InternetImageParser
     {
         static async Task Main(string[] args)
         {
-            //string searchQuery = "Собака";
-            Console.WriteLine($"Привет {Environment.UserName}! Напиши что будем искать. Поисковый запрос");
-            string searchQuery = Console.ReadLine();
-
-            Console.WriteLine("Сколько картинок скачать? Максимально 40");
-            int imagesToDownload = Convert.ToInt32(Console.ReadLine());
-            imagesToDownload = Math.Min(imagesToDownload, 40);
-
-            Console.WriteLine("Куда будем сохранять? Если директории нет то она будет создана автоматом\r\nПример D:\\MyDownload");
-            string saveDirectory = Console.ReadLine();
-
-
-            Console.WriteLine($"Принято. Прмерное время ожидания ~{2 * 1.2d * imagesToDownload}\r\nМы начинаем!");
-            string url = $"https://yandex.ru/images/search?text={searchQuery}&from=tabbar";
-
-            string html = GetHtml(url);
-
-            if (!Directory.Exists(saveDirectory))
+            string input;
+            do
             {
-                Directory.CreateDirectory(saveDirectory);
-            }
+                //string searchQuery = "Собака";
+                Console.WriteLine($"Привет {Environment.UserName}! Напиши что будем искать. Поисковый запрос");
+                string searchQuery = Console.ReadLine();
 
-            int count = 0;
-            foreach (string imageUrl in await ExtractImageUrls(html))
-            {
-                DownloadImage(imageUrl, Path.Combine(saveDirectory, $"image{count}.jpg"));
-                count++;
+                Console.WriteLine("Сколько картинок скачать? Максимально 40");
+                int imagesToDownload = Convert.ToInt32(Console.ReadLine());
+                imagesToDownload = Math.Min(imagesToDownload, 40);
 
-                if (count >= imagesToDownload)
+                Console.WriteLine("Куда будем сохранять? Если директории нет то она будет создана автоматом");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Пример D:\\MyDownload");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(
+                    "Если оставить поле пустым, папка будет создана автоматом рядом с исполняемым файлом");
+                string? saveDirectory = Console.ReadLine();
+                saveDirectory = !string.IsNullOrWhiteSpace(saveDirectory) ? saveDirectory : searchQuery;
+
+
+                Console.WriteLine(
+                    $"Принято. Прмерное время ожидания ~{0.25d * 1.2d * imagesToDownload} сек.\r\nМы начинаем!");
+                string url = $"https://yandex.ru/images/search?text={searchQuery}&from=tabbar";
+
+                string html = GetHtml(url);
+
+                if (!Directory.Exists(saveDirectory))
                 {
-                    break;
+                    Directory.CreateDirectory(saveDirectory);
                 }
 
-                await Task.Delay(600);
-            }
+                int count = 0;
+                foreach (string imageUrl in await ExtractImageUrls(html))
+                {
+                    if (File.Exists(Path.Combine(saveDirectory, $"image{count}.jpg")))
+                    {
+                        var pathSave = Path.Combine(saveDirectory, Guid.NewGuid().ToString().Replace("-", "") + ".jpg");
+                        DownloadImage(imageUrl, pathSave);
+                    }
+                    else
+                    {
+                        var pathSave = Path.Combine(saveDirectory, $"image{count}.jpg");
+                        DownloadImage(imageUrl, pathSave);
+                    }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Операция успешно завершена. Все картинки скачены");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.ReadLine();
+                    count++;
+
+                    if (count >= imagesToDownload)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(50);
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Операция успешно завершена. Все картинки скачены.\r\nХотите выйти введите Q или q, если нет нажмите ENTER");
+                Console.ForegroundColor = ConsoleColor.White;
+                input = Console.ReadLine();
+
+            }
+            
+            while (/*!string.IsNullOrWhiteSpace(input) && */input.ToLowerInvariant() != "q");
 
         }
 
@@ -75,7 +99,7 @@ namespace InternetImageParser
             {
                 foreach (var imgNode in imgNodes)
                 {
-                    await Task.Delay(600);
+                    await Task.Delay(30);
                     string imageUrl = imgNode.GetAttributeValue("src", "");
                     if (!string.IsNullOrWhiteSpace(imageUrl))
                     {
@@ -105,7 +129,9 @@ namespace InternetImageParser
             var time = Stopwatch.StartNew();
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(imageUrl, savePath);
+                if(!File.Exists(savePath))
+                    client.DownloadFile(imageUrl, savePath);
+                else client.DownloadFile(imageUrl,  savePath);
             }
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine($"На скачивание и сохранение {savePath} файла было затрачено {time.Elapsed.TotalSeconds}сек.");
